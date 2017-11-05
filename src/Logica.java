@@ -25,7 +25,7 @@ class Logica {
 
             while (threadVivo) {
                 try {
-                    infoString = "playerOneUp:"+keysOne[0]+",playerOneDown:"+keysOne[1]+",playerOneLeft:"+keysOne[2]+",playerOneRight:"+keysOne[3];
+                    infoString = "playerOneUp:"+keysOne[0]+",playerOneDown:"+keysOne[1]+",playerOneLeft:"+keysOne[2]+",playerOneRight:"+keysOne[3]+",playerTwoUp:"+keysTwo[0]+",playerTwoDown:"+keysTwo[1]+",playerTwoLeft:"+keysTwo[2]+",playerTwoRight:"+keysTwo[3];
                     // puertoArduino.write(infoString);
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
@@ -135,11 +135,14 @@ class Logica {
      }
 
      System.out.println(key);
-     System.out.println(infoString);
+
 
     }
 
     void keyUp (int key) {
+
+        System.out.println(infoString);
+
         if (key == sketchRef.UP){
             keysOne[0] = false;
         }
