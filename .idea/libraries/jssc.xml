@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="jssc">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/serial/jssc.jar!/" />
+      <root url="file://$PROJECT_DIR$/libs/serial" />
+    </CLASSES>
+    <JAVADOC />
+    <NATIVE>
+      <root url="file://$PROJECT_DIR$/libs/serial/windows64" />
+      <root url="file://$PROJECT_DIR$/libs/serial/windows32" />
+      <root url="file://$PROJECT_DIR$/libs/serial/macosx" />
+      <root url="file://$PROJECT_DIR$/libs/serial/linux64" />
+    </NATIVE>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/libs/serial/jssc.jar!/" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/libs/serial" recursive="false" />
+  </library>
+</component>

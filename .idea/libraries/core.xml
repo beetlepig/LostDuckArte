@@ -3,7 +3,9 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/libs/core.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="http://processing.github.io/processing-javadocs/core/" />
+    </JAVADOC>
     <SOURCES />
   </library>
 </component>

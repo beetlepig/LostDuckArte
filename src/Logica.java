@@ -1,14 +1,39 @@
 import processing.core.PApplet;
+import processing.serial.Serial;
 
-  class Logica {
+class Logica {
     private PApplet sketchRef;
     private boolean[] keysOne;
     private boolean[] keysTwo;
+    private Serial puertoArduino;
+    private String infoString;
+    private Thread sendString;
+    private boolean threadVivo;
 
     Logica (PApplet sketch) {
         this.sketchRef = sketch;
+        threadVivo = true;
         keysOne = new boolean [4];
         keysTwo = new boolean [4];
+     //   puertoArduino = new Serial(sketch, Serial.list()[0], 9600);
+        sendString = new Thread(sendInfo());
+        sendString.start();
+    }
+
+    private Runnable sendInfo () {
+        return () -> {
+
+            while (threadVivo) {
+                try {
+                    infoString = "playerOneUp:"+keysOne[0]+",playerOneDown:"+keysOne[1]+",playerOneLeft:"+keysOne[2]+",playerOneRight:"+keysOne[3];
+                    // puertoArduino.write(infoString);
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                     e.printStackTrace();
+                }
+            }
+
+        };
     }
 
      void display () {
@@ -110,6 +135,7 @@ import processing.core.PApplet;
      }
 
      System.out.println(key);
+     System.out.println(infoString);
 
     }
 
