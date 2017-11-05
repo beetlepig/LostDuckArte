@@ -7,8 +7,19 @@ bool motorUnoActivado = false;
 bool motorDosActivado = false;
 bool motorTresActivado = false;
 
+unsigned long previousMillis = 0;       
 
-char val;
+// constants won't change:
+const long interval = 10;         
+
+
+String val;
+
+String part01;
+
+String part02;
+
+bool playerOneUp;
 
 void setup() {
   // set the digital pin as output:
@@ -19,26 +30,53 @@ void setup() {
   digitalWrite(motorPinDos, LOW);
   digitalWrite(motorPinTres, LOW);
   Serial.begin(9600);
+  Serial.setTimeout(50);
 }
 
 void loop() {
+  unsigned long currentMillis = millis();
+
+    if (currentMillis - previousMillis >= interval) {
+        previousMillis = currentMillis;
+
+
+        
   if (Serial.available()) { // If data is available to read,
-    val = Serial.read(); // read it and store it in val
+    delay(2);
+   val= Serial.readStringUntil(',');// read the incoming data as string
+   // Serial.println(val); 
+    part01 = getValue(val,':',0);
+    
+    if(part01 == "playerOneUp"){
+      
+    part02 = getValue(val,':',1);
+    
+    if(part02 == "true"){
+      playerOneUp = true;
+      Serial.println(val);
+    } else if (part02 == "false") {
+      playerOneUp = false;
+    }
+          
+    } else if (part01 == "playerOneDown"){
+         
+    }
 
-    switch (val) {
+      if (playerOneUp == true) {
 
-      case '1':
-        if (!motorUnoActivado) {
           digitalWrite(motorPinUno, HIGH);
-          Serial.println("encender Motor 1");
-        } else {
-          digitalWrite(motorPinUno, LOW);
-          Serial.println("apagar Motor 1");
-        }
-        motorUnoActivado = !motorUnoActivado;
-        break;
+       //   Serial.println("encender Motor 1");
 
-      case '2':
+        } else { 
+          
+          digitalWrite(motorPinUno, LOW);
+        //  Serial.println("apagar Motor 1");
+        }
+
+
+      
+
+      if (val == "2") {
         if (!motorDosActivado) {
           digitalWrite(motorPinDos, HIGH);
           Serial.println("encender Motor 2");
@@ -48,9 +86,9 @@ void loop() {
         }
         motorDosActivado = !motorDosActivado;
 
-        break;
+      }
 
-      case '3':
+      if (val == "3") {
         if (!motorTresActivado) {
           digitalWrite(motorPinTres, HIGH);
           Serial.println("encender Motor 3");
@@ -60,16 +98,28 @@ void loop() {
         }
         motorTresActivado = !motorTresActivado;
 
-        break;
-
-      case '4':
-
-
-        break;
-    }
+      }
+    
   }
 
 
-  delay(30);
+    }
 
+}
+
+String getValue(String data, char separator, int index)
+{
+  int found = 0;
+  int strIndex[] = {0, -1};
+  int maxIndex = data.length()-1;
+
+  for(int i=0; i<=maxIndex && found<=index; i++){
+    if(data.charAt(i)==separator || i==maxIndex){
+        found++;
+        strIndex[0] = strIndex[1]+1;
+        strIndex[1] = (i == maxIndex) ? i+1 : i;
+    }
+  }
+
+  return found>index ? data.substring(strIndex[0], strIndex[1]) : "";
 }
